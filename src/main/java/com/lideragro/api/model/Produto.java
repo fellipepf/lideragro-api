@@ -30,23 +30,23 @@ public class Produto {
 	private Long codigoBarras;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_categoria")
+	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 	
-	@Column(name = "id_subcategoria")
+	@Column(name = "subcategoria_id")
 	private Long subCategoria;
 	
-	@Column(name = "id_fabricante")
+	@Column(name = "fabricante_id")
 	private Long fabricante;
 	
-	@Column(name = "id_fornecedor")
+	@Column(name = "fornecedor_id")
 	private Long fornecedor;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_unidade_medida")
+	@JoinColumn(name = "unidade_medida_id")
 	private UnidadeMedida unidadeMedida;
 	
-
+	@NotNull
 	@Column(name = "ativo")
 	private Boolean ativo;
 	

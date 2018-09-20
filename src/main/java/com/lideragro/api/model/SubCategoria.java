@@ -24,7 +24,7 @@ public class SubCategoria {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_categoria")
+	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 	
 	@NotNull

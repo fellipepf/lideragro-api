@@ -1,6 +1,7 @@
 package com.lideragro.api.resource;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -8,7 +9,10 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +49,15 @@ public class ProdutoResource {
 		
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) {
+
+		Produto produto = produtoRepository.getOne(id);
+		
+		return produto != null ? ResponseEntity.ok(produto) : ResponseEntity.notFound().build();
+
+	}
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)   //exibir status 201 created
 	public ResponseEntity<Produto> criar(@Valid @RequestBody Produto produto, HttpServletResponse response) {
@@ -58,12 +71,17 @@ public class ProdutoResource {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Produto> atualizar(@PathVariable Long id, @Valid @RequestBody Produto produto){
-		Produto produtoSalvo = produtoRepository.getOne(id);
-		BeanUtils.copyProperties(produto, produtoSalvo, "id");
-		produtoRepository.save(produtoSalvo);
-		
+		Produto produtoSalvo = produtoService.atualizar(id, produto);
+
 		return ResponseEntity.ok(produtoSalvo);
 		
+	}
+	
+	@PutMapping("/{id}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void atualizarPropriedadeAtivo(@PathVariable Long id, @RequestBody Boolean ativo){
+		produtoService.atualizarPropriedadeAtivo(id, ativo);
+	
 	}
 	
 	@DeleteMapping("/{id}")
@@ -72,10 +90,15 @@ public class ProdutoResource {
 		produtoRepository.deleteById(id);
 	}
 	
-	@PutMapping("{/{id}/ativo")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void atualizarPropriedadeAtivo(@PathVariable Long id, @RequestBody Boolean ativo){
-		produtoService.atualizarPropriedadeAtivo(id, ativo);
-	
+	@GetMapping("/relatorio")
+	public ResponseEntity<byte[]>  relatorio() throws Exception {
+
+		byte[] relatorio = produtoService.relatorioListaPreco();
+		
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
+				.body(relatorio);
 	}
+	
+
 }
