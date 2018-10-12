@@ -27,6 +27,7 @@ import com.lideragro.api.events.RecursoCriadoEvent;
 import com.lideragro.api.model.Produto;
 import com.lideragro.api.repository.ProdutoRepository;
 import com.lideragro.api.repository.filter.ProdutoFilter;
+import com.lideragro.api.repository.projection.ResumoProduto;
 import com.lideragro.api.service.ProdutoService;
 
 //@CrossOrigin(maxAge = 10)
@@ -53,8 +54,14 @@ public class ProdutoResource {
 	
 	@GetMapping
 	public Page<Produto> pesquisar(ProdutoFilter produtoFilter, Pageable pageable){
+		System.out.println("filtro");
 		return produtoRepository.filtroProduto(produtoFilter, pageable);
-		
+	}
+	
+	@GetMapping(params = "resumo")
+	public Page<ResumoProduto> resumir(ProdutoFilter produtoFilter, Pageable pageable){
+		System.out.println("resumo");
+		return produtoRepository.resumir(produtoFilter, pageable);
 	}
 	
 	@GetMapping("/{id}")

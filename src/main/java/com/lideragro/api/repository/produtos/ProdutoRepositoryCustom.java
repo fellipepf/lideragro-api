@@ -13,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lideragro.api.model.Produto;
 import com.lideragro.api.repository.filter.ProdutoFilter;
+import com.lideragro.api.repository.projection.ResumoProduto;
 
 public interface ProdutoRepositoryCustom {
 	
 	public Page<Produto> filtroProduto(ProdutoFilter produtoFilter, Pageable pageable);
+	public Page<ResumoProduto> resumir(ProdutoFilter produtoFilter, Pageable pageable);
 
 }

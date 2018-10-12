@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lideragro.api.model.Produto;
 import com.lideragro.api.repository.filter.ProdutoFilter;
+import com.lideragro.api.repository.projection.ResumoProduto;
 
 @Component
 public class ProdutoRepositoryImpl implements ProdutoRepositoryCustom{
@@ -56,7 +57,7 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryCustom{
 		return manager.createQuery(criteria).getSingleResult();
 	}
 
-	private void adicionarRestricoesDePaginacao(TypedQuery<Produto> query, Pageable pageable) {
+	private void adicionarRestricoesDePaginacao(TypedQuery<?> query, Pageable pageable) {
 		int paginaAtual = pageable.getPageNumber();
 		int totalRegistrosPorPagina = pageable.getPageSize();
 		int primeiroRegistroPagina = paginaAtual * totalRegistrosPorPagina;
@@ -81,5 +82,27 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryCustom{
 		
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
-
+	
+	@Override
+	public Page<ResumoProduto> resumir(ProdutoFilter produtoFilter, Pageable pageable) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<ResumoProduto> criteria = builder.createQuery(ResumoProduto.class);
+		Root<Produto> root = criteria.from(Produto.class);
+		
+		criteria.select(builder.construct(ResumoProduto.class, 
+				root.get("id"),
+				root.get("codigoBarras"),
+				root.get("unidadeMedida").get("nome"),
+				root.get("ativo"),
+				root.get("nome"),
+				root.get("precoVenda")));
+		
+		Predicate[] predicates = criarRestricoes(produtoFilter,builder,root);
+		criteria.where(predicates);
+		
+		TypedQuery<ResumoProduto> query = manager.createQuery(criteria);
+		adicionarRestricoesDePaginacao(query,pageable);
+		
+		return new PageImpl<>(query.getResultList(), pageable, total(produtoFilter));
+	}
 }
