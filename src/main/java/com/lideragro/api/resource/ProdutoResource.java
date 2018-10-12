@@ -1,20 +1,16 @@
 package com.lideragro.api.resource;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +22,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lideragro.api.events.RecursoCriadoEvent;
-import com.lideragro.api.model.Categoria;
 import com.lideragro.api.model.Produto;
 import com.lideragro.api.repository.ProdutoRepository;
+import com.lideragro.api.repository.filter.ProdutoFilter;
 import com.lideragro.api.service.ProdutoService;
 
 //@CrossOrigin(maxAge = 10)
+
 @RestController
 @RequestMapping("/produto")
 public class ProdutoResource {
@@ -45,9 +42,16 @@ public class ProdutoResource {
 	@Autowired
 	private ProdutoService produtoService;
 	
-	@GetMapping
+/*
 	public List<Produto> listar(){
 		return produtoRepository.findAll();
+		
+	}
+	*/
+	
+	@GetMapping
+	public List<Produto> pesquisar(ProdutoFilter produtoFilter){
+		return produtoRepository.filtroProduto(produtoFilter);
 		
 	}
 	
