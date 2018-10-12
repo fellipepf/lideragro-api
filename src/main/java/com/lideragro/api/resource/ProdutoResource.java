@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -50,8 +52,8 @@ public class ProdutoResource {
 	*/
 	
 	@GetMapping
-	public List<Produto> pesquisar(ProdutoFilter produtoFilter){
-		return produtoRepository.filtroProduto(produtoFilter);
+	public Page<Produto> pesquisar(ProdutoFilter produtoFilter, Pageable pageable){
+		return produtoRepository.filtroProduto(produtoFilter, pageable);
 		
 	}
 	
