@@ -54,13 +54,11 @@ public class ProdutoResource {
 	
 	@GetMapping
 	public Page<Produto> pesquisar(ProdutoFilter produtoFilter, Pageable pageable){
-		System.out.println("filtro");
 		return produtoRepository.filtroProduto(produtoFilter, pageable);
 	}
 	
 	@GetMapping(params = "resumo")
 	public Page<ResumoProduto> resumir(ProdutoFilter produtoFilter, Pageable pageable){
-		System.out.println("resumo");
 		return produtoRepository.resumir(produtoFilter, pageable);
 	}
 	

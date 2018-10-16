@@ -74,6 +74,11 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryCustom{
 					builder.lower(root.get("nome")), "%"+ produtoFilter.getNome().toLowerCase() + "%"));
 		}
 		
+		if (produtoFilter.getId() != null) {
+			predicates.add(builder.equal(
+					root.get("id"), produtoFilter.getId()));
+		}
+		
 		if (produtoFilter.getCodigoBarras() != null) {
 			predicates.add(builder.equal(
 					root.get("codigoBarras"), produtoFilter.getCodigoBarras()));
