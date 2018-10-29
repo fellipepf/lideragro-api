@@ -25,8 +25,6 @@ import com.lideragro.api.events.RecursoCriadoEvent;
 import com.lideragro.api.model.Categoria;
 import com.lideragro.api.repository.CategoriaRepository;
 
-
-
 @RestController
 @RequestMapping("/categoria")
 public class CategoriaResource {
