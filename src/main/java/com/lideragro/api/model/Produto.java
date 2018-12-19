@@ -30,9 +30,6 @@ public class Produto {
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 	
-	@Column(name = "subcategoria_id")
-	private Long subCategoria;
-	
 	@Column(name = "fabricante_id")
 	private Long fabricante;
 	
@@ -85,14 +82,6 @@ public class Produto {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
-	}
-
-	public Long getSubCategoria() {
-		return subCategoria;
-	}
-
-	public void setSubCategoria(Long subCategoria) {
-		this.subCategoria = subCategoria;
 	}
 
 	public Long getFabricante() {

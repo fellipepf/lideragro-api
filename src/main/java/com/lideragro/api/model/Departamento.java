@@ -15,21 +15,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "subcategoria")
-public class SubCategoria {
+@Table(name = "departamento")
+public class Departamento {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_subcategoria")
+	@Column(name = "id_departamento")
 	private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name = "categoria_id")
-	private Categoria categoria;
-	
 	@NotNull
-	@Size(min = 3, max = 20)
-	@Column(name = "nome_subcategoria")
+	@Size(min = 3, max = 50)
+	@Column(name = "nome_departamento")
 	private String nome;
 
 	public Long getId() {
@@ -40,13 +36,6 @@ public class SubCategoria {
 		this.id = id;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
 
 	public String getNome() {
 		return nome;
@@ -54,6 +43,31 @@ public class SubCategoria {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Departamento other = (Departamento) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 	
 	

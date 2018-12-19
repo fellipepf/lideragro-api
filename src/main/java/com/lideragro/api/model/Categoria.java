@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,6 +22,10 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_categoria")
 	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "departamento_id")
+	private Departamento departamento;
 
 	@NotNull
 	@Size(min = 3, max = 20)
@@ -32,6 +38,14 @@ public class Categoria {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
 	}
 
 	public String getNome() {
