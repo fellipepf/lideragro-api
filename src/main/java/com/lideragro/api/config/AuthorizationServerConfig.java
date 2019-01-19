@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -27,7 +28,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()//.passwordEncoder(NoOpPasswordEncoder.getInstance())
-		.withClient("angular").secret("{noop}@ngul@r")
+		.withClient("angular").secret(passwordEncoded("@ngul@r"))//secret("{noop}@ngul@r")
 		.scopes("read","write")
 		.authorizedGrantTypes("password", "refresh_token")
 		.accessTokenValiditySeconds(30)
@@ -55,6 +56,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		return new JwtTokenStore(accessTokenConverter());
 	}
 
+	/*
+	 * a senha do lado do cliente tb deve ser encodada com o bcrypt 
+	 */
+	private String passwordEncoded(String rawPassword) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder.encode(rawPassword);
+	}
 
 	
 }
