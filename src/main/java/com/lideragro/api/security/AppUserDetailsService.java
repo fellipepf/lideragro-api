@@ -29,12 +29,14 @@ public class AppUserDetailsService implements UserDetailsService {
 		
 		Usuario usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuario e/ou senha incorretos"));
 		
-		return new User(email, usuario.getSenha(), getPermissoes(usuario));
+		return new UsuarioSistema(usuario, getPermissoes(usuario));
 	}
 
 	private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
 		Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-		usuario.getPermissoes().forEach(p -> authorities.add(new SimpleGrantedAuthority(p.getDescricao().toUpperCase())));
+		usuario.getPermissoes().forEach(
+				p -> authorities.add(new SimpleGrantedAuthority(p.getDescricao().toUpperCase()))
+			);
 		
 		return authorities;
 	}
