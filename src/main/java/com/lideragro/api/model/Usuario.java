@@ -2,6 +2,7 @@ package com.lideragro.api.model;
 
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,6 +24,8 @@ public class Usuario {
 	
 	private String nome;
 	private String email;
+	
+	@Basic(fetch = FetchType.LAZY)
 	private String senha;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
