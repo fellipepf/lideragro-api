@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,16 +52,19 @@ public class ProdutoResource {
 	*/
 	
 	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO')")
 	public Page<Produto> pesquisar(ProdutoFilter produtoFilter, Pageable pageable){
 		return produtoRepository.filtroProduto(produtoFilter, pageable);
 	}
 	
 	@GetMapping(params = "resumo")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO')")
 	public Page<ResumoProduto> resumir(ProdutoFilter produtoFilter, Pageable pageable){
 		return produtoRepository.resumir(produtoFilter, pageable);
 	}
 	
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO')")
 	public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) {
 
 		Produto produto = produtoRepository.getOne(id);
