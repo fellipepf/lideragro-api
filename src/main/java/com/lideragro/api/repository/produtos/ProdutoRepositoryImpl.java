@@ -100,7 +100,9 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryCustom{
 				root.get("unidadeMedida").get("nome"),
 				root.get("ativo"),
 				root.get("nome"),
-				root.get("precoVenda")));
+				root.get("precoVenda"),
+                                root.get("quantity")
+                                 ));
 		
 		Predicate[] predicates = criarRestricoes(produtoFilter,builder,root);
 		criteria.where(predicates);

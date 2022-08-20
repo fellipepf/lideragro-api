@@ -8,15 +8,17 @@ public class ResumoProduto {
 	private Boolean ativo;
 	private String nome;
 	private Double preco;
+        private Integer quantity;
 	
 	public ResumoProduto(Long id, Long codigoBarras, String unidadeMedida, Boolean ativo, String nome,
-			Double preco) {
+			Double preco, Integer quantity) {
 		this.id = id;
 		this.codigoBarras = codigoBarras;
 		this.unidadeMedida = unidadeMedida;
 		this.ativo = ativo;
 		this.nome = nome;
 		this.preco = preco;
+                this.quantity = quantity;
 	}
 	
 
@@ -58,5 +60,14 @@ public class ResumoProduto {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+        
 
 }

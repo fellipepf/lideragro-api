@@ -58,6 +58,9 @@ public class Produto {
 	@NotNull
 	@Column(name = "preco_venda")
 	private Double precoVenda;
+        
+        @Column(name = "quantity")
+	private Integer quantity;
 
 	public Long getId() {
 		return id;
@@ -147,6 +150,15 @@ public class Produto {
 	public void setPrecoVenda(Double precoVenda) {
 		this.precoVenda = precoVenda;
 	}
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 	
+        
 	
 }
