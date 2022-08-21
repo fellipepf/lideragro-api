@@ -9,9 +9,9 @@
 - PostgreSQL
 
 ### Front-end
-- CRUD OPERATION 
-- ADMIN MODULE
-- USER MODULE
+- Crud Operation 
+- Admin module (in development)
+- User module
 - Angular 8
 
 ### Features
